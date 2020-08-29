@@ -9,7 +9,7 @@
 	
 	<title>
 	
-		About | 
+		关于 | 
 	 
 	Hexo
 	</title>
@@ -116,17 +116,27 @@
 	<div id="content">
 		<h1 id="article-title">
 
-	About
+	关于
 </h1>
 <div class="article-meta">
 	
-	<span>John Doe</span>
+		<span>
+			阅读量:<span id="/about/index.html" class="leancloud_visitors" data-flag-title="关于"></span>
+		</span>
+	
+	<span>Kun Yang</span>
 	<span>2020-08-29 23:59:55</span>
     
 </div>
 
 <div id="article-content">
-	
+	<h2 id="关于我"><a href="#关于我" class="headerlink" title="关于我"></a>关于我</h2><ul>
+<li>2016-2019 清华大学清华伯克利深圳学院 电气工程</li>
+<li>2017-2018 加州大学伯克利分校 工业工程与运筹专业</li>
+<li>2019-至今 顺丰科技 数据挖掘与分析工程师</li>
+</ul>
+<h2 id="关于博客"><a href="#关于博客" class="headerlink" title="关于博客"></a>关于博客</h2><p>2018年就萌生了写博客的念头，主要想做些技术积累，同时记录所思所想。</p>
+
 </div>
 
 
@@ -152,12 +162,44 @@
 		})
 	
 	
+    // 显示次数
+		function showTime(Counter) {
+			var query = new AV.Query("Counter");
+			if($(".leancloud_visitors").length > 0){
+				var url = $(".leancloud_visitors").attr('id').trim();
+				// where field
+				query.equalTo("words", url);
+				// count
+				query.count().then(function (number) {
+					// There are number instances of MyClass where words equals url.
+					$(document.getElementById(url)).text(number?  number : '--');
+				}, function (error) {
+					// error is an instance of AVError.
+				});
+			}
+		}
+		// 追加pv
+		function addCount(Counter) {
+			var url = $(".leancloud_visitors").length > 0 ? $(".leancloud_visitors").attr('id').trim() : 'wujun234.github.io';
+			var Counter = AV.Object.extend("Counter");
+			var query = new Counter;
+			query.save({
+				words: url
+			}).then(function (object) {
+			})
+		}
+		$(function () {
+			var Counter = AV.Object.extend("Counter");
+			addCount(Counter);
+			showTime(Counter);
+		});
+	
 </script>
 	</div>
 	<div id="footer">
 	<p>
 	©2020-<span id="footerYear"></span> 
-	<a href="/">John Doe</a> 
+	<a href="/">Kun Yang</a> 
 	
 	
 		|
